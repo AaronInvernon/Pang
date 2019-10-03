@@ -1,8 +1,8 @@
 class Ball {
     constructor(ctx) {
         this.ctx = ctx;
-        this.x = 200;
-        this.y = 200;
+        this.x = this.ctx.canvas.width / 2;
+        this.y = 50;
         this.r = 40;
 
         this.vx = 1;
@@ -44,9 +44,9 @@ class Ball {
           this.vx *= -1
         }
     
-        if (this.y + this.r >= this.ctx.canvas.height) {
+        if (this.y + this.r >= this.ctx.canvas.height * 0.9) {
           this.vy *= -1
-          this.y = this.ctx.canvas.height - this.r
+          this.y = this.ctx.canvas.height*0.9 - this.r
         }
       }
 }

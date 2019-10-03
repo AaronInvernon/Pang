@@ -23,9 +23,11 @@ class Game{
     _draw() {
         this.bg._draw();
         this.ball._draw();
+        this.p1._draw();
     }
 
     _move() {
         this.ball._move();
+        this.p1._move();
     }
 }
