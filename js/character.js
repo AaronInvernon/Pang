@@ -5,7 +5,7 @@ const SPACE_KEY = 32
 class Character{
     constructor(ctx){
         this.ctx = ctx;
-        this.x = this.ctx.canvas.width * 0.8;
+        this.x = this.ctx.canvas.width /2;
         this.y = this.ctx.canvas.height * 0.8;
         this.w = 80;
         this.h = 110;

@@ -1,13 +1,13 @@
 class Ball {
-    constructor(ctx) {
+    constructor(ctx,x,y,r, vx) {
         this.ctx = ctx;
-        this.x = this.ctx.canvas.width / 2;
-        this.y = 50;
-        this.r = 40;
+        this.x = x;
+        this.y = y;
+        this.r = r;
 
-        this.vx = 1;
+        this.vx = vx;
         this.vy = 0;
-        this.ay = 0.3;
+        this.ay = 0.2;
     
         this.color = "white"
     }
@@ -51,17 +51,8 @@ class Ball {
     }
 
     collide(el) {
-        const colX = el.x + el.w > this.x + this.r && el.x < this.x + this.r
+        const colX = el.x + el.w > this.x - this.r && el.x < this.x + this.r 
         const colY = el.y + el.h > this.y + this.r && el.y < this.y + this.r
-        
         return colX && colY
-    }
-
-    
-
-    destroyBall(){
-        this.x = 0;
-        this.y = 0;
-        this.r = 0;
     }
 }

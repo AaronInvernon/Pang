@@ -3,10 +3,15 @@ class Game{
         this.ctx = ctx;
         this.intervalID = null;
         this.bg = new Background(ctx);
-        this.ball = new Ball(ctx);
         this.p1 = new Character(ctx);
         this.img = new Image();
         this.img.src = "images/gameOver.png";
+        this.imgW = new Image();
+        this.imgW.src = "images/win.png";
+        this.bX = this.ctx.canvas.width / 2;
+        this.bY = 50;
+        this.bR =  50;
+        this.balls = [new Ball(ctx, this.bX, this.bY, this.bR,1)]
     }
 
     run() {
@@ -24,50 +29,87 @@ class Game{
     }
 
     _draw() {
-        this.bg._draw();
-        this.ball._draw();
-        this.p1._draw();
+      this.bg._draw();
+      this.p1._draw();
+      this.balls.forEach(b => b._draw())
     }
 
     _move() {
-        this.ball._move();
-        this.p1._move();
+      this.balls.forEach(b => b._move())
+      this.p1._move();
+      this.win()
     }
 
     _checkCollisions() {
         /* Colision con el personaje */
-        const col =  this.ball.collide(this.p1);
-    
-        if (col) {
-          this._gameOver()
-        }
+        this.balls.forEach(b => {
+          if (b.collide(this.p1)) {
+            this._gameOver()
+          }
+        })
 
         /* Colision con el laser*/
         if (this.p1.arrow) {
-          const colBall = this.p1.arrow.collideBall(this.ball);
+          this.balls.forEach(b =>{
+            if (this.p1.arrow.collideBall(b)) {
+              this.destroyBall(b);
+            }
+          })
 
-          if (colBall) {
-            this.ball.destroyBall();
-          }
         }
     }
 
     _gameOver() {
         clearInterval(this.intervalId)
-      //   this.ctx.fillStyle = "yellow"
-      //   this.ctx.font = "80px Roboto";
-      //   this.ctx.textAlign = "center";
-      //   this.ctx.fillText(
-      //     "GAME OVER",
-      //     this.ctx.canvas.width / 2,
-      //     this.ctx.canvas.height / 2
-      //   );
         this.ctx.drawImage(
           this.img,
-          this.ctx.canvas.width / 3,
-          this.ctx.canvas.height / 3, 
-          300, 
-          200
+          this.ctx.canvas.width / 5,
+          this.ctx.canvas.height / 5, 
+          500, 
+          300
         );
     }
+
+    destroyBall(b){
+
+      if(this.p1.arrow) {
+        this.p1.arrow = null;   
+      }
+
+      if(b.r >= 20){
+        this.balls.push(
+          new Ball(
+            this.ctx,
+            b.x,
+            b.y,
+            b.r * 0.6,
+            b.vx*-1.5
+          ),
+          new Ball(
+            this.ctx,
+            b.x,
+            b.y,
+            b.r * 0.6,
+            b.vx
+          )
+        )
+      }
+      const ball = this.balls.indexOf(b);
+      this.balls.splice(ball, ball+1)
+    }
+
+    win(){
+      if(this.balls.length === 0){
+        clearInterval(this.intervalId)
+        this.ctx.drawImage(
+          this.imgW,
+          this.ctx.canvas.width / 7,
+          this.ctx.canvas.height / 8, 
+          600, 
+          400
+        );
+      }
+  }
+
+
 }
