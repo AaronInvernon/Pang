@@ -48,5 +48,20 @@ class Ball {
           this.vy *= -1
           this.y = this.ctx.canvas.height*0.9 - this.r
         }
-      }
+    }
+
+    collide(el) {
+        const colX = el.x + el.w > this.x + this.r && el.x < this.x + this.r
+        const colY = el.y + el.h > this.y + this.r && el.y < this.y + this.r
+        
+        return colX && colY
+    }
+
+    
+
+    destroyBall(){
+        this.x = 0;
+        this.y = 0;
+        this.r = 0;
+    }
 }

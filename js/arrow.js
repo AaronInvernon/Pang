@@ -9,26 +9,22 @@ class Arrow {
       }
     
       draw() {
+        this.ctx.fillStyle = "red"
         this.ctx.fillRect(
             this.x, 
             this.y, 
             this.w, 
             this.h -= 20
-        )
-
-        // if(this.h >= this.ctx.canvas.height-this.y){
-        //     this.x = 0;
-        //     this.y = 0;
-        //     this.h = 0;
-        // }
-
-        this.ctx.fillStyle = "red"
-          
+        )          
       }
 
       isFinished() {
         return Math.abs(this.h) >= this.y
       }
     
-      
+      collideBall(b) {
+        const colX = b.x + b.r > this.x + this.w;
+        const colY = this.y + this.h < b.y + b.r && this.h < b.y + b.r;
+        return colX && colY;
+      }
 }

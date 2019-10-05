@@ -86,7 +86,6 @@ class Character{
             this.ctx, 
             this.x + this.w / 2.5, 
             this.y
-        )
-        
+        )   
     }
 }
