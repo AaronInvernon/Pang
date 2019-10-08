@@ -23,7 +23,8 @@ class Arrow {
       }
     
       collideBall(b) {
-        const colX = b.x + b.r > this.x + this.w;
+        
+        const colX = this.x + this.w > b.x - b.r && this.x < b.x + b.r ;
         const colY = this.y + this.h < b.y + b.r && this.h < b.y + b.r;
         return colX && colY;
       }

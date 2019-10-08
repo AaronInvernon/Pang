@@ -12,11 +12,12 @@ class Character{
         this.vx = 0;
 
         this.img = new Image();
-        this.img.src = "images/sprite.png";
+        this.img.src = "media/images/sprite.png";
         this.img.frames = 9;
         this.img.frameIndex = 0;
+        
+        this.shootAudio = new Audio('media/sounds/laserShoot.mp3');
 
-        // this.arrow = [];
         this.arrow = null
 
         this._setListeners();
@@ -82,6 +83,8 @@ class Character{
       }
 
     _shoot() {
+      this.shootAudio.pause();
+      this.shootAudio.play();
         this.arrow = new Arrow(
             this.ctx, 
             this.x + this.w / 2.5, 
