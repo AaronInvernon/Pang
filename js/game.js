@@ -65,6 +65,7 @@ class Game{
           })
         }
         
+        /* Colisión entre bolas */
        this.balls.forEach((b1, i) => {
          this.balls.forEach((b2, j) => {
            if (j <= i) return;
