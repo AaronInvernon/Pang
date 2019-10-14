@@ -5,10 +5,11 @@ class Game{
         this.bg = new Background(ctx);
         this.p1 = new Character(ctx);
 
-        this.bX = this.ctx.canvas.width / 2;
-        this.bY = 50;
-        this.bR =  50;
-        this.balls = [new Ball(ctx, this.bX, this.bY, this.bR,1)]
+        this.bX = this.ctx.canvas.width * 0.8;
+        this.bY = 60;
+        this.bR =  70;
+        this.balls = [new Ball(ctx, this.bX, this.bY, this.bR,-1)]
+        this.powerUps = []
         
         this.img = new Image();
         this.img.src = "media/images/gameOver.png";
@@ -40,6 +41,7 @@ class Game{
       this.bg._draw();
       this.p1._draw();
       this.balls.forEach(b => b._draw())
+      this.powerUps.forEach(pU => pU._draw())
     }
 
     _move() {
@@ -56,14 +58,27 @@ class Game{
           }
         })
 
-        /* Colision con el laser */
+        
         if (this.p1.arrow) {
+
+          /* Colision del laser con la bola */
           this.balls.forEach(b =>{
             if (this.p1.arrow && this.p1.arrow.collideBall(b)) {
               this.destroyBall(b);
             }
           })
+
+          /* Colision de el laser con el upgrade */
+          this.powerUps.forEach(u =>{
+            if (this.p1.arrow && this.p1.arrow.collideUpgrade(u)) {
+              this.cleanUpgrade(u);
+            }
+          })
         }
+
+        
+
+
         
         /* Colisión entre bolas */
        this.balls.forEach((b1, i) => {
@@ -107,14 +122,14 @@ class Game{
           this.ctx,
           b.x,
           b.y,
-          b.r * 0.6,
+          b.r * 0.5,
           b.vx*-1.5
         )
         const b2 = new Ball(
           this.ctx,
           b.x,
           b.y,
-          b.r * 0.6,
+          b.r * 0.5,
           b.vx
         )
         b1.brother = b2
@@ -124,11 +139,23 @@ class Game{
           b1, b2
         )
       }
+
+      this.generatePowerUp(b);
+
+      /* Eliminar la bola que choca */
       const ball = this.balls.indexOf(b);
       this.balls.splice(ball, ball+1)
+      
     }
 
-    win(){
+    cleanUpgrade(u) {
+      
+      const upgrade = this.powerUps.indexOf(u);
+      this.powerUps.splice(upgrade, upgrade+1);
+      this.p1.v += 5
+    }
+
+    win() {
       if(this.balls.length === 0){
         this.audio.pause();
         this.winAudio.play();
@@ -141,7 +168,17 @@ class Game{
           400
         );
       }
-  }
+    }
+
+    generatePowerUp(b){
+      /* Generar un power up */
+      
+      const rdmNumber = Math.random() * 10
+      if(rdmNumber < 3){
+        const pwrUp = new PowerUP(this.ctx, b.x, b.y);
+        this.powerUps.push(pwrUp);
+      }
+    }
 
 
 }

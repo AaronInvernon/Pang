@@ -28,4 +28,13 @@ class Arrow {
         const colY = this.y + this.h < b.y + b.r && this.h < b.y + b.r;
         return colX && colY;
       }
+
+      collideUpgrade(u) {
+       
+        const colX = u.x + u.w > this.x && u.x < this.x + this.w;
+        const colY = u.y + u.h < this.y && u.y > this.y + this.h;
+        //debugger
+        return colX && colY
+        
+      }
 }

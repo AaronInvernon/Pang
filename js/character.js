@@ -11,6 +11,7 @@ class Character{
         this.h = 110;
         this.vx = 0;
         this.tick = 1;
+        this.v = 5
         
         this.img = new Image();
         this.img.src = "media/images/SPRITE.png";
@@ -56,11 +57,11 @@ class Character{
     _setListeners() {
         document.onkeydown = (e) => {
           if (e.keyCode === RIGHT_KEY) {
-            this.vx = 5
+            this.vx = this.v
             this.img.frameIndex = 7
             this._animate("right");
           } else if (e.keyCode === LEFT_KEY) {
-            this.vx = -5
+            this.vx = -this.v
             this.img.frameIndex = 0
             this._animate("left");
           } else if (e.keyCode === SPACE_KEY) {
