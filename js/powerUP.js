@@ -7,7 +7,7 @@ class PowerUP{
         this.w = 50;
 
         this.img = new Image();
-        this.img.src = "media/images/powerUp.png";
+        this.img.src = "media/images/powerUP.png";
     }
 
     _draw(){
