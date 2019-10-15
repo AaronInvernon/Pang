@@ -14,7 +14,7 @@ class Character{
         this.v = 5
         
         this.img = new Image();
-        this.img.src = "media/images/SPRITE.png";
+        this.img.src = "media/images/sprite.png";
         this.img.frames = 11;
         this.img.frameIndex = 6;
         
